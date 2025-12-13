@@ -4,7 +4,7 @@ public class Main {
         BankAccount account2 = new BankAccount("ACC002", 1500.0, "Checking");
         BankAccount account3 = new BankAccount("ACC001", 1000.0, "Savings"); // Same as account1 for comparison
 
-        Customer customer1 = new Customer("CUST001", "Kairat Nurtas", "kair_n@mail.ru", "8-701-943-3310");
+        Customer customer1 = new Customer("CUST001", "Kairat Nurtas", "kair_n@gmail.com", "8-701-943-3310");
         Customer customer2 = new Customer("CUST002", "Ernar Aidar", "ernar-aidar@mail.ru", "8-727-391-3552");
 
         Bank bank = new Bank("MyBank", "MB001");

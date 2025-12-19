@@ -3,6 +3,7 @@ public class Main {
         BankAccount account1 = new BankAccount("ACC001", 1000.0, "Savings");
         BankAccount account2 = new BankAccount("ACC002", 1500.0, "Checking");
         BankAccount account3 = new BankAccount("ACC001", 1000.0, "Savings"); // Same as account1 for comparison
+        BankAccount account_empty = new BankAccount();
 
         Customer customer1 = new Customer("CUST001", "Kairat Nurtas", "kair_n@gmail.com", "8-701-943-3310");
         Customer customer2 = new Customer("CUST002", "Ernar Aidar", "ernar-aidar@mail.ru", "8-727-391-3552");
@@ -25,6 +26,8 @@ public class Main {
         System.out.println(account2);
         System.out.println("\nAccount 3:");
         System.out.println(account3);
+        System.out.println("\n(Additionally)\nEmpty Account:");
+        System.out.println(account_empty);
 
         System.out.println("\nComparisons:");
         System.out.println("Account1 equals Account2: " + account1.equals(account2)); // false

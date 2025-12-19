@@ -7,6 +7,13 @@ void main() {
     Customer customer1 = new Customer("CUST001", "Kairat Nurtas", "kair_n@gmail.com", "8-701-943-3310");
     Customer customer2 = new Customer("CUST002", "Ernar Aidar", "ernar-aidar@mail.ru", "8-727-391-3552");
     Customer customer_empty = new Customer();
+    SuperCustomer scustomer1 = new SuperCustomer(
+            customer1.getCustomerId(),
+            customer1.getName(),
+            customer1.getEmail(),
+            customer1.getPhone(),
+            "15%"
+    );
 
     Bank bank = new Bank("MyBank", "MB001");
     Bank bank_empty = new Bank();
@@ -15,6 +22,7 @@ void main() {
     bank.addAccount(account1);
     bank.addAccount(account2);
     bank_empty.addAccount(account_empty);
+    bank.addCustomer(scustomer1); // supercustomer check
 
     IO.println("Bank Details:");
     IO.println(bank);
@@ -24,6 +32,8 @@ void main() {
     IO.println(customer2);
     IO.println("\n(TESTED)\nEmpty Customer:");
     IO.println(customer_empty);
+    IO.println("\nSuperCustomer 1 (upgraded from Customer 1):");
+    IO.println(scustomer1);
     IO.println("\nAccount 1:");
     IO.println(account1);
     IO.println("\nAccount 2:");
@@ -37,6 +47,8 @@ void main() {
     IO.println("Account1 equals Account2: " + account1.equals(account2)); // false
     IO.println("Account1 equals Account3: " + account1.equals(account3)); // true
     IO.println("Customer1 equals Customer2: " + customer1.equals(customer2)); // false
+    IO.println("SuperCustomer1 equals Customer1: " + scustomer1.equals(customer1)); // false (different classes/types)
+    IO.println("SuperCustomer1 bonus: " + scustomer1.getBonus());
 
     account1.deposit(500.0);
     IO.println("\nAfter depositing 500 to Account1:");

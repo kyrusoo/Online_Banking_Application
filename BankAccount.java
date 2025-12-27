@@ -4,17 +4,32 @@ public class BankAccount {
     private String accountNumber;
     private double balance;
     private String accountType; // e.g., "Savings" or "Checking"
+    private String customerId;  // Added for linking to Customer
 
     public BankAccount() {
         this.accountNumber = "";
         this.balance = 0.0;
         this.accountType = "Savings";
+        this.customerId = "";  // Default
     }
 
     public BankAccount(String accountNumber, double balance, String accountType) {
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.accountType = accountType;
+        this.customerId = "";  // Default; set via setter if needed
+    }
+    // New constructor for linking
+    public BankAccount(String accountNumber, double balance, String accountType, String customerId) {
+
+        this.accountNumber = accountNumber;
+
+        this.balance = balance;
+
+        this.accountType = accountType;
+
+        this.customerId = customerId;
+
     }
 
     public String getAccountNumber() {
@@ -40,6 +55,10 @@ public class BankAccount {
     public void setAccountType(String accountType) {
         this.accountType = accountType;
     }
+
+    public String getCustomerId() { return customerId; }
+
+    public void setCustomerId(String customerId) { this.customerId = customerId; }
 
     public void deposit(double amount) {
         if (amount > 0) {

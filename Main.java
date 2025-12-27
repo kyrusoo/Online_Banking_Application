@@ -1,7 +1,7 @@
 void main() {
-    BankAccount account1 = new BankAccount("ACC001", 1000.0, "Savings");
-    BankAccount account2 = new BankAccount("ACC002", 1500.0, "Checking");
-    BankAccount account3 = new BankAccount("ACC001", 1000.0, "Savings"); // Same as account1 for comparison
+    BankAccount account1 = new BankAccount("ACC001", 1000.0, "Savings", "CUST001");  // Linked to customer1
+    BankAccount account2 = new BankAccount("ACC002", 1500.0, "Checking", "CUST002");  // Linked to customer2
+    BankAccount account3 = new BankAccount("ACC001", 1000.0, "Savings", "CUST001");  // Same as account1
     BankAccount account_empty = new BankAccount();
 
     Customer customer1 = new Customer("CUST001", "Kairat Nurtas", "kair_n@gmail.com", "8-701-943-3310");
@@ -57,4 +57,16 @@ void main() {
     boolean withdrawn = account2.withdraw(200.0);
     IO.println("\nWithdraw 200 from Account2 (success: " + withdrawn + "):");
     IO.println(account2);
+
+    // Data Pool Operations
+    IO.println("\n--- Data Pool Operations ---");
+    IO.println("Find Customer by ID 'CUST001': " + bank.findCustomerById("CUST001").orElse(null));
+    IO.println("Find Account by Number 'ACC002': " + bank.findAccountByNumber("ACC002").orElse(null));
+    IO.println("Accounts for Customer 'CUST001': " + bank.findAccountsByCustomerId("CUST001"));
+    IO.println("Accounts with balance > 1200: " + bank.filterAccountsByBalance(1200.0));
+    IO.println("Savings Accounts: " + bank.filterAccountsByType("Savings"));
+    IO.println("Customers with 'Kai' in name: " + bank.filterCustomersByName("Kai"));
+    IO.println("Customers sorted by name: " + bank.sortCustomersByName());
+    IO.println("Accounts sorted by balance (desc): " + bank.sortAccountsByBalanceDescending());
+    IO.println("Accounts sorted by type: " + bank.sortAccountsByType());
 }

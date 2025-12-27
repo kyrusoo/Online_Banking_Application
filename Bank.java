@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Bank {
     private String bankName;
@@ -31,11 +33,11 @@ public class Bank {
     }
 
     public List<Customer> getCustomers() {
-        return customers;
+        return new ArrayList<>(customers);  // Return a copy to prevent external modification
     }
 
     public List<BankAccount> getAccounts() {
-        return accounts;
+        return new ArrayList<>(accounts);  // Return a copy
     }
 
     public void setBankName(String bankName) {
@@ -52,6 +54,63 @@ public class Bank {
 
     public void addAccount(BankAccount account) {
         this.accounts.add(account);
+    }
+
+    // Data pool operations: Searching
+    public Optional<Customer> findCustomerById(String id) {
+        return customers.stream()
+                .filter(c -> c.getCustomerId().equals(id))
+                .findFirst();
+    }
+
+    public Optional<BankAccount> findAccountByNumber(String accountNumber) {
+        return accounts.stream()
+                .filter(a -> a.getAccountNumber().equals(accountNumber))
+                .findFirst();
+    }
+
+    public List<BankAccount> findAccountsByCustomerId(String customerId) {
+        return accounts.stream()
+                .filter(a -> a.getCustomerId().equals(customerId))
+                .collect(Collectors.toList());
+    }
+
+    // Data pool operations: Filtering
+    public List<BankAccount> filterAccountsByBalance(double minBalance) {
+        return accounts.stream()
+                .filter(a -> a.getBalance() > minBalance)
+                .collect(Collectors.toList());
+    }
+
+    public List<BankAccount> filterAccountsByType(String type) {
+        return accounts.stream()
+                .filter(a -> a.getAccountType().equalsIgnoreCase(type))
+                .collect(Collectors.toList());
+    }
+
+    public List<Customer> filterCustomersByName(String nameSubstring) {
+        return customers.stream()
+                .filter(c -> c.getName().toLowerCase().contains(nameSubstring.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    // Data pool operations: Sorting
+    public List<Customer> sortCustomersByName() {
+        return customers.stream()
+                .sorted(Comparator.comparing(Customer::getName))
+                .collect(Collectors.toList());
+    }
+
+    public List<BankAccount> sortAccountsByBalanceDescending() {
+        return accounts.stream()
+                .sorted(Comparator.comparingDouble(BankAccount::getBalance).reversed())
+                .collect(Collectors.toList());
+    }
+
+    public List<BankAccount> sortAccountsByType() {
+        return accounts.stream()
+                .sorted(Comparator.comparing(BankAccount::getAccountType))
+                .collect(Collectors.toList());
     }
 
     @Override

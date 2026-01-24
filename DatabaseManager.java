@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseManager {
     private final String url = "jdbc:postgresql://localhost:5432/OOP_project";
@@ -28,5 +30,28 @@ public class DatabaseManager {
         } catch (SQLException e) {
             System.err.println("Insert error: " + e.getMessage());
         }
+    }
+    // SELECT
+    public List<Customer> getAllCustomers() {
+        List<Customer> list = new ArrayList<>();
+        String sql = "SELECT * FROM customers";
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                String bonus = rs.getString("bonus");
+                if (bonus != null) {
+                    list.add(new SuperCustomer(rs.getString("customer_id"), rs.getString("name"),
+                            rs.getString("email"), rs.getString("phone"), bonus));
+                } else {
+                    list.add(new Customer(rs.getString("customer_id"), rs.getString("name"),
+                            rs.getString("email"), rs.getString("phone")));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Read error: " + e.getMessage());
+        }
+        return list;
     }
 }

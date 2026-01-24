@@ -1,21 +1,29 @@
 void main() {
-    DatabaseManager db = new DatabaseManager();
+    DatabaseManager customerDb = new DatabaseManager();
+    AccountManager accountDb = new AccountManager();
     // INSERT INTO check
-    Customer kairat = new Customer("CUST001", "Kairat Nurtas", "kair_n@gmail.com", "8-701-943-3310");
-    db.saveCustomer(kairat);
+    // Customer kairat = new Customer("CUST001", "Kairat Nurtas", "kair_n@gmail.com", "8-701-943-3310");
+    // customerDb.saveCustomer(kairat);
     // SELECT check
-    System.out.println("Customers in DB: " + db.getAllCustomers());
+    // System.out.println("Customers in DB: " + customerDb.getAllCustomers());
     // Update check
-    db.updateCustomerPhone("CUST001", "8-777-000-0000");
-
-    BankAccount account1 = new BankAccount("ACC001", 1000.0, "Savings", "CUST001");  // Linked to customer1
-    BankAccount account2 = new BankAccount("ACC002", 1500.0, "Checking", "CUST002");  // Linked to customer2
-    BankAccount account3 = new BankAccount("ACC001", 1000.0, "Savings", "CUST001");  // Same as account1
-    BankAccount account_empty = new BankAccount();
+    // customerDb.updateCustomerPhone("CUST001", "8-777-000-0000");
 
     Customer customer1 = new Customer("CUST001", "Kairat Nurtas", "kair_n@gmail.com", "8-701-943-3310");
+    customerDb.saveCustomer(customer1);
     Customer customer2 = new Customer("CUST002", "Ernar Aidar", "ernar-aidar@mail.ru", "8-727-391-3552");
-    Customer customer_empty = new Customer();
+    customerDb.saveCustomer(customer2);
+
+    BankAccount account1 = new BankAccount("ACC001", 1000.0, "Savings", "CUST001");  // Linked to customer1
+    accountDb.saveAccount(account1);
+    BankAccount account2 = new BankAccount("ACC002", 1500.0, "Checking", "CUST002");  // Linked to customer2
+    accountDb.saveAccount(account2);
+    BankAccount account3 = new BankAccount("ACC003", 1000.0, "Savings", "CUST001");  // Same as account1
+    accountDb.saveAccount(account3);
+    //BankAccount account_empty = new BankAccount();
+    customerDb.deleteCustomer("CUST001");
+
+    //Customer customer_empty = new Customer();
     SuperCustomer scustomer1 = new SuperCustomer(
             customer1.getCustomerId(),
             customer1.getName(),
@@ -23,14 +31,15 @@ void main() {
             customer1.getPhone(),
             "15%"
     );
+    customerDb.saveCustomer(scustomer1);
 
     Bank bank = new Bank("MyBank", "MB001");
-    Bank bank_empty = new Bank();
+    //Bank bank_empty = new Bank();
     bank.addCustomer(customer1);
     bank.addCustomer(customer2);
     bank.addAccount(account1);
     bank.addAccount(account2);
-    bank_empty.addAccount(account_empty);
+    //bank_empty.addAccount(account_empty);
     bank.addCustomer(scustomer1); // supercustomer check
 
     IO.println("Bank Details:");
@@ -39,8 +48,8 @@ void main() {
     IO.println(customer1);
     IO.println("\nCustomer 2:");
     IO.println(customer2);
-    IO.println("\n(TESTED)\nEmpty Customer:");
-    IO.println(customer_empty);
+    //IO.println("\n(TESTED)\nEmpty Customer:");
+    //IO.println(customer_empty);
     IO.println("\nSuperCustomer 1 (upgraded from Customer 1):");
     IO.println(scustomer1);
     IO.println("\nAccount 1:");
@@ -49,8 +58,8 @@ void main() {
     IO.println(account2);
     IO.println("\nAccount 3:");
     IO.println(account3);
-    IO.println("\n(TESTED)\nEmpty Account:");
-    IO.println(account_empty);
+    //IO.println("\n(TESTED)\nEmpty Account:");
+    //IO.println(account_empty);
 
     IO.println("\nComparisons:");
     IO.println("Account1 equals Account2: " + account1.equals(account2)); // false
@@ -60,10 +69,12 @@ void main() {
     IO.println("SuperCustomer1 bonus: " + scustomer1.getBonus());
 
     account1.deposit(500.0);
+    accountDb.updateBalance(account1.getAccountNumber(), account1.getBalance());
     IO.println("\nAfter depositing 500 to Account1:");
     IO.println(account1);
 
     boolean withdrawn = account2.withdraw(200.0);
+    accountDb.updateBalance(account2.getAccountNumber(), account2.getBalance());
     IO.println("\nWithdraw 200 from Account2 (success: " + withdrawn + "):");
     IO.println(account2);
 

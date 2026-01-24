@@ -67,4 +67,16 @@ public class DatabaseManager {
             System.err.println("Update error: " + e.getMessage());
         }
     }
+    // DELETE
+    public void deleteCustomer(String id) {
+        String sql = "DELETE FROM customers WHERE customer_id = ?";
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, id);
+            pstmt.executeUpdate();
+            System.out.println("Deleted customer: " + id);
+        } catch (SQLException e) {
+            System.err.println("Delete error: " + e.getMessage());
+        }
+    }
 }

@@ -54,4 +54,17 @@ public class DatabaseManager {
         }
         return list;
     }
+    // UPDATE
+    public void updateCustomerPhone(String id, String newPhone) {
+        String sql = "UPDATE customers SET phone = ? WHERE customer_id = ?";
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, newPhone);
+            pstmt.setString(2, id);
+            pstmt.executeUpdate();
+            System.out.println("Update successful for ID: " + id);
+        } catch (SQLException e) {
+            System.err.println("Update error: " + e.getMessage());
+        }
+    }
 }

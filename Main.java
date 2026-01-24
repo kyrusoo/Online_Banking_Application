@@ -5,6 +5,8 @@ void main() {
     db.saveCustomer(kairat);
     // SELECT check
     System.out.println("Customers in DB: " + db.getAllCustomers());
+    // Update check
+    db.updateCustomerPhone("CUST001", "8-777-000-0000");
 
     BankAccount account1 = new BankAccount("ACC001", 1000.0, "Savings", "CUST001");  // Linked to customer1
     BankAccount account2 = new BankAccount("ACC002", 1500.0, "Checking", "CUST002");  // Linked to customer2

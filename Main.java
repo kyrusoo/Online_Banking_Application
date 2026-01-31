@@ -89,4 +89,23 @@ void main() {
     IO.println("Customers sorted by name: " + bank.sortCustomersByName());
     IO.println("Accounts sorted by balance (desc): " + bank.sortAccountsByBalanceDescending());
     IO.println("Accounts sorted by type: " + bank.sortAccountsByType());
+
+    try {
+        // 1. Start the Server on port 8080
+        com.sun.net.httpserver.HttpServer server =
+                com.sun.net.httpserver.HttpServer.create(new java.net.InetSocketAddress(8080), 0);
+
+        // 2. Map the URL "/api/customers" to your Handler logic
+        server.createContext("/api/customers", new CustomerHandler());
+
+        // 3. Start it!
+        server.start();
+
+        System.out.println("🚀 Server is running!");
+        System.out.println("Check it out here: http://localhost:8080/api/customers");
+
+    } catch (java.io.IOException e) {
+        System.err.println("Could not start server: " + e.getMessage());
+    }
+
 }
